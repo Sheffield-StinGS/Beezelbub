@@ -37,7 +37,7 @@ async def handover(ctx):
         StinGS_member_role = ctx.guild.get_role(core_config["StinGS_Default_Role"])
         overwrites = {
             new_committee_role : discord.PermissionOverwrite(read_messages = True), 
-            StinGS_member_role : discord.PermissionOverwrite(view_channel = False)
+            StinGS_member_role : discord.PermissionOverwrite(read_messages = False)
         }
         await ctx.guild.create_text_channel(channel_name, catagory=core_config["Committee_Catagory_ID"], overwrites=overwrites)
         #The above code creates the new committee channel and sets the channel permissions so that only committee can see it
@@ -47,7 +47,7 @@ async def handover(ctx):
 
         await ctx.send("Please tag the new committee members seperated by a comma")
         try:
-            response = await Core.bot.wait_for("message",check=check, timeout=30)
+            response = await Core.bot.wait_for("message",check=check, timeout=60)
         except asyncio.TimeoutError:
             await ctx.send("Sorry you took too long to respond. Please use the command again.")
         new_committee_member_list = response.split(",")
